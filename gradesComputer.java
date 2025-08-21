@@ -1,3 +1,5 @@
+//Day 1 (arrays) (August 19, 2025)
+
 import java.util.Scanner;
 
 public class gradesComputer {

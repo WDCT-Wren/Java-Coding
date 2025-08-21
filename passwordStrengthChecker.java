@@ -7,6 +7,7 @@
  
  - Wren Daniel C. Tulio (August 21, 2025)*/
 
+//Day 2 (String manipulation and loop methods)
 import java.util.Scanner;
 
 public class passwordStrengthChecker {
