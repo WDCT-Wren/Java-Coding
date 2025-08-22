@@ -48,13 +48,13 @@ public class gradesComputer {
         //processes the average grade to give the user their grade distribution (A, B, C, D, F)
         
         if (avgGrade <=100 && avgGrade >= 90){
-            gradeDistribution = "1.00 - 1.50";
+            gradeDistribution = "1.00 - 1.50(Passed!)";
         } 
         else if (avgGrade <=89 && avgGrade >= 80){
-            gradeDistribution = "1.75 - 2.25";
+            gradeDistribution = "1.75 - 2.25 (Passed)";
         }
         else if (avgGrade <=79 && avgGrade >= 70){
-            gradeDistribution = "2.50 - 3.00";
+            gradeDistribution = "2.50 - 3.00 (Passed)";
         }
         else{
             gradeDistribution = "3.00 - 5.00 (Failing)";

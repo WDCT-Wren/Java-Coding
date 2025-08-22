@@ -1,3 +1,5 @@
+//Day 2 (String manipulation)
+
 import java.util.Scanner;
 
 public class nameReverser {
