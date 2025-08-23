@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Calculator {
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in); //initiates the scanner or the prompter for user input
+        Scanner input = new Scanner(System.in); 
         
         //The following used to intialize the four main variables that will be used in the project
         double n1;

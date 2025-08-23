@@ -25,7 +25,7 @@ public class passwordStrengthChecker {
         System.out.print("Enter password (Must be longer than 8 characters, include at least 1 special character, and include at least 1 numerical value): "); //prompts the user for a password and gives the criterias.
         userPass = input.nextLine();
 
-        //checks the password if it meets the criterias
+        //checks the password repeatedly if it met the criterias 
         while(true){
             hasSpecialChar = false; 
             hasNum = false;

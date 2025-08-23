@@ -1,3 +1,5 @@
+// One of the given items of Ma'am Capulli's Flowchart Activities (BMI Computer)
+
 import java.util.Scanner;
 
 public class BMI {
