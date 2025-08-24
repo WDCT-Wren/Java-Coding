@@ -1,5 +1,6 @@
 /*
-Day 4 of Creating mini projects every day. 
+Day 4 (Integration of mathematical equations)(08/23/25)
+of Creating mini projects every day. 
 Mortgage Calculator 
 */
 

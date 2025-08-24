@@ -26,7 +26,6 @@ public class gradesComputer {
 
         //System.out.println("Grades inputted: "); 
         /*for(int i = 0; i < grades.length; i++){
-            //simply displays the grades previously inputted.
             System.out.println(grades[i]); //uses local var i as the index, incrementing each itteration on the array grades[].
         }*/
         
