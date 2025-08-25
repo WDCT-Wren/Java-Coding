@@ -38,5 +38,5 @@ public class BankAccount {
             System.out.println("WITHDRAWAL SUCCESS");
             System.out.printf("WITHDRAWAL AMOUNT: $%.2f\n", amount);
             System.out.printf("AVAILABLE BALANCE: $%.2f\n", this.balance);
-    }   
-}
+    }
+}   

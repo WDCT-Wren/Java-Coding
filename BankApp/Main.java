@@ -29,9 +29,10 @@ public class Main {
             
             boolean validChoice = false;
             int choice = 0;
+
             //input validation for the starting menu
             while (validChoice == false) {
-                try {
+                try { 
                     System.out.print("Please Choose an action to proceed: ");
                     choice = input.nextInt();
                     input.nextLine();
@@ -66,23 +67,25 @@ public class Main {
 
                     BankAccount currentAcc = null;
                     
-                    for (BankAccount acc : accounts){
-                        if (acc.getAccountNumber() == enteredAcc) {
+                    for (BankAccount acc : accounts){ //utilizes a for loop to pass through all existing accounts in the arraylist account and checks and processes each one accordingly
+                        if (acc.getAccountNumber() == enteredAcc) { //if one iteration of the arraylists of account numbersmatches the entered account, that entered account will now be assigned to the current account, which simply "logs you in" to that iteration of accounts.
                             currentAcc = acc;
                             break;
                         };
                     }
 
+                    // if there are still no accounts in the array list, any input will show this.
                     if (currentAcc == null){
                         System.out.println("ACCOUNT NOT FOUND!");
                     }
+                    // if there are existing accounts in the array list, it will follow then the for loop thing.
                     else {
-                        System.out.println("LOGIN SUCCESSFUL");
+                        System.out.println("LOGIN SUCCESSFUL FOR: " + currentAcc.getOwnerName()); //includes the user name to validate the user passed.
                         //calls the main menu method
                         showMainMenu(currentAcc);
                     }
                 }
-                case 3 -> {
+                case 3 -> { //if user chooses to exit the session
                     System.out.println("MENU EXITED");
                     System.out.println("SESSION ENDED");
                     System.out.println("THANK YOU FOR BANKING WITH US!");
@@ -100,15 +103,15 @@ public class Main {
         while (true) {
             System.out.print("ENTER NAME: ");
             name = input.nextLine();
-            if (name.matches("^[a-zA-Z ]+$")) {break;}
+            if (name.matches("^[a-zA-Z ]+$")) {break;} //Regex checks the name inputted if it matches with the following (if its a-z or A-Z and if there are spaces)
             System.out.println("INVALID NAME! Please only use letters and spaces.");
         }
 
-            BankAccount newAccount = new BankAccount(name);
+            BankAccount newAccount = new BankAccount(name); //Makes a new object iteration of the bank account with the corresponding name
             int newAccountNumber = newAccount.getAccountNumber();
 
-            accounts.add(newAccount);
-
+            accounts.add(newAccount); //adds the account to the BankAccount Arraylists inside the Main itself
+            
             System.out.println("ACCOUNT REGISTERD SUCCESSFULLY");
             System.out.println("YOUR REGISTERED ACCOUNT NUMBER: " + newAccountNumber);
             
@@ -148,12 +151,8 @@ public class Main {
                 }
                 switch (accountChoice) {
                     case 1 -> System.out.printf("YOUR BALANCE: $%.2f\n", currentAcc.showBalance()); //show balance case
-                    case 2 -> { //deposit case
-                        
-                    }
-                    case 3 -> { //withdrawal case
-                        
-                    }
+                    case 2 -> deposit(currentAcc);//deposit case
+                    case 3 -> withdrawal(currentAcc);//withdrawal case
                     case 4 -> { //exit case
                         System.out.println("TRANSACTION EXITED");
                         inAccount = false;
@@ -166,8 +165,6 @@ public class Main {
     //depositing validation method
     public static void deposit(BankAccount currentAcc) {
         boolean validAmount = false; 
-
-        //validation of the amount value
         while (validAmount == false) {
             try {
                 System.out.print("ENTER AMOUNT DEPOSITED: ");
@@ -192,17 +189,15 @@ public class Main {
     //withdrawal validation method
     public static void withdrawal(BankAccount currentAcc) {
         boolean validAmount = false;
-
-        //validation of the amount value
         while (validAmount == false) {
             try {
                 System.out.print("ENTER WITHDRAWAL AMOUNT: ");
                 double amount = input.nextDouble();
-                if (amount > currentAcc.showBalance()) {
+                if (amount < 0) {
                     System.out.println("INVALID AMOUNT! Please enter a non-negative amount.");
                     input.nextLine();
                 }
-                else if (amount < 0) {
+                else if (amount > currentAcc.showBalance()) {
                     System.out.println("INSUFFICIENT BALANCE!");
                     input.nextLine();
                 }
