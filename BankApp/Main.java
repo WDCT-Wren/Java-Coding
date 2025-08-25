@@ -9,14 +9,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {    
+    // Declared global variables
+    static Scanner input = new Scanner(System.in);
+    static ArrayList<BankAccount> accounts = new ArrayList<>();
+    public static void main(String[] args) {
         // Declare local variables
-        Scanner input = new Scanner(System.in);
-        ArrayList<BankAccount> accounts = new ArrayList<>();
         boolean isRunning = true;
 
         //Starting menu (Asks user to either choose an existing account, register an account, and exit)
         while (isRunning){
+            // starting menu screen
             System.out.println("********************************************");
             System.out.println("BANK OF THE BOURGEOISIES OF CALIFORNIA (BBC)");
             System.out.println("********************************************");
@@ -24,23 +26,31 @@ public class Main {
             System.out.println("2. Choose Existing Account");
             System.out.println("3. exit");
             System.out.println("********************************************");
-            System.out.print("Please Choose an action to proceed: ");
-            int choice = input.nextInt();
-            input.nextLine();
+            
+            boolean validChoice = false;
+            int choice = 0;
+            //input validation for the starting menu
+            while (validChoice == false) {
+                try {
+                    System.out.print("Please Choose an action to proceed: ");
+                    choice = input.nextInt();
+                    input.nextLine();
+                    if (choice < 1 || choice > 3) { //exception handling if the user input is not between 1 or 3
+                        System.out.println("INVALID CHOICE! Please enter a number between 1-3.");
+                    }
+                    else {
+                        validChoice = true;
+                    }
+                }
+                catch(java.util.InputMismatchException e) { //exception handling if the user input is not the same type to the choice (int)
+                    System.out.println("INVALID INPUT! Please enter a number between 1-3.");
+                    input.nextLine(); // clear the invalid input
+                }
+            }
 
             switch (choice) {
                 case 1 -> {
-                    //Reistration logic
-                    System.out.print("ENTER NAME: ");
-                    String name = input.nextLine();
-
-                    int newAccountNumber = 1001 + accounts.size(); //avoids storing the account number as 1000, it should always start as 1001
-                    BankAccount newAccount = new BankAccount(newAccountNumber, name, 0.0);
-
-                    accounts.add(newAccount);
-
-                    System.out.println("ACCOUNT REGISTERD SUCCESSFULLY");
-                    System.out.println("YOUR REGISTERED ACCOUNT NUMBER: " + newAccountNumber);
+                    showRegistrationMenu();
                 }
                 case 2 -> {
                     // Show available accounts in the session
@@ -67,51 +77,144 @@ public class Main {
                         System.out.println("ACCOUNT NOT FOUND!");
                     }
                     else {
-                        // Main transaction menu
-                        boolean inAccount = true;
-                        while (inAccount){       
-                            // Menu Screen
-                            System.out.println("***************");
-                            System.out.println("1. Show Balance");
-                            System.out.println("2. Deposit");
-                            System.out.println("3. Withdraw");
-                            System.out.println("4. Exit");
-                            System.out.println("***************");
-
-                            System.out.print("Enter your transaction (1-4): "); // Get and process user choice
-                            int accountChoice = input.nextInt();
-
-                            switch (accountChoice) {
-                                case 1 -> System.out.printf("YOUR BALANCE: $%.2f\n", currentAcc.showBalance()); //show balance case
-                                case 2 -> { //deposit case
-                                    System.out.print("ENTER AMOUNT DEPOSITED: ");
-                                    double amount = input.nextDouble();
-                                    currentAcc.deposit(amount);
-                                }
-                                case 3 -> { //withdrawal case
-                                    System.out.print("ENTER WITHDRAWAL AMOUNT: ");
-                                    double amount = input.nextDouble();
-                                    currentAcc.withdraw(amount);
-                                }
-                                case 4 -> { //exit case
-                                    System.out.println("TRANSACTION EXITED");
-                                    inAccount = false;
-                                }
-                                default -> System.out.println("INVALID CHOICE!");
-                            }
-                        }
-                        currentAcc = null;
+                        System.out.println("LOGIN SUCCESSFUL");
+                        //calls the main menu method
+                        showMainMenu(currentAcc);
                     }
                 }
                 case 3 -> {
-                    System.out.println("MENU EXITED, PROGRAM EXITED");
+                    System.out.println("MENU EXITED");
+                    System.out.println("SESSION ENDED");
+                    System.out.println("THANK YOU FOR BANKING WITH US!");
                     isRunning = false;
                 }
-                default -> System.out.println("INVALID CHOICE!");
             }
-
         }
-        
         input.close();
     } 
+
+    //Registration menu method that will be called when the user wants to register a new account
+    public static void showRegistrationMenu() {
+        //Reistration logic
+        String name;
+        while (true) {
+            System.out.print("ENTER NAME: ");
+            name = input.nextLine();
+            if (name.matches("^[a-zA-Z ]+$")) {break;}
+            System.out.println("INVALID NAME! Please only use letters and spaces.");
+        }
+
+            BankAccount newAccount = new BankAccount(name);
+            int newAccountNumber = newAccount.getAccountNumber();
+
+            accounts.add(newAccount);
+
+            System.out.println("ACCOUNT REGISTERD SUCCESSFULLY");
+            System.out.println("YOUR REGISTERED ACCOUNT NUMBER: " + newAccountNumber);
+            
+    }
+        
+        //Main menu method that will be called when the user successfully logs in to their account
+    public static void showMainMenu(BankAccount currentAcc) {
+        boolean inAccount = true;
+        while (inAccount){       
+            // Menu Screen
+            System.out.println("***************");
+            System.out.println("1. Show Balance");
+            System.out.println("2. Deposit");
+            System.out.println("3. Withdraw");
+            System.out.println("4. Exit");
+            System.out.println("***************");
+
+            boolean validChoice = false;
+            int accountChoice = 0;
+            
+                // Validate input in transaction menu
+                while (validChoice == false){
+                    try {
+                        System.out.print("Enter your transaction (1-4): "); // Get and process user choice
+                        accountChoice = input.nextInt();
+                        if (accountChoice < 1 || accountChoice > 4){
+                            System.out.println("INVALID CHOICE! Please choose between 1-4.");
+                        }
+                        else {
+                            validChoice = true;
+                        }
+                    }
+                    catch (java.util.InputMismatchException e){ 
+                        System.out.println("INVALID CHOICE! please choose between 1-4.");
+                        input.nextLine();
+                    }
+                }
+                switch (accountChoice) {
+                    case 1 -> System.out.printf("YOUR BALANCE: $%.2f\n", currentAcc.showBalance()); //show balance case
+                    case 2 -> { //deposit case
+                        
+                    }
+                    case 3 -> { //withdrawal case
+                        
+                    }
+                    case 4 -> { //exit case
+                        System.out.println("TRANSACTION EXITED");
+                        inAccount = false;
+                    }
+                }
+            }
+        currentAcc = null;
+    }
+
+    //depositing validation method
+    public static void deposit(BankAccount currentAcc) {
+        boolean validAmount = false; 
+
+        //validation of the amount value
+        while (validAmount == false) {
+            try {
+                System.out.print("ENTER AMOUNT DEPOSITED: ");
+                double amount = input.nextDouble();
+                
+                if (amount < 0){
+                    System.out.println("INVALID AMOUNT! Please enter a non-negative amount.");
+                    input.nextLine();
+                }
+                else{
+                    currentAcc.deposit(amount);
+                    validAmount = true;
+                }
+            }
+            catch (java.util.InputMismatchException e) {
+                System.out.println("INVALID AMOUNT! Please enter a valid amount(in numerical form).");
+                input.nextLine();
+            }
+        }
+    }
+
+    //withdrawal validation method
+    public static void withdrawal(BankAccount currentAcc) {
+        boolean validAmount = false;
+
+        //validation of the amount value
+        while (validAmount == false) {
+            try {
+                System.out.print("ENTER WITHDRAWAL AMOUNT: ");
+                double amount = input.nextDouble();
+                if (amount > currentAcc.showBalance()) {
+                    System.out.println("INVALID AMOUNT! Please enter a non-negative amount.");
+                    input.nextLine();
+                }
+                else if (amount < 0) {
+                    System.out.println("INSUFFICIENT BALANCE!");
+                    input.nextLine();
+                }
+                else {
+                    currentAcc.withdraw(amount);
+                    validAmount = true;
+                }
+            }
+            catch (java.util.InputMismatchException e) {
+                System.out.println("INVALID AMOUNT! Please enter a valid amount(in numerical form).");
+                input.nextLine();
+            }
+        }
+    }
 }
