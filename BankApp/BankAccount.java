@@ -1,10 +1,28 @@
 package BankApp;
 
 public class BankAccount {
+    private static int nextAccountNumber = 1000; //starting point of the account number generator.
+    private int accountNumber;
+    private String ownerName;
     private double balance;
 
-    public BankAccount() {
-        this.balance = 0;
+    public BankAccount(int accountNumber, String ownerName, double balance) {
+        this.ownerName = ownerName;
+        this.accountNumber = nextAccountNumber++;
+        this.balance = 0.0;
+    }
+
+    public int getAccountNumber() {
+        return this.accountNumber;
+    }
+
+    public String getOwnerName() {
+        return this.ownerName;
+    }
+
+    //if user wants to see their balance:
+    public double showBalance(){
+        return this.balance;
     }
 
     //Deposit method
@@ -34,8 +52,4 @@ public class BankAccount {
             System.out.printf("AVAILABLE BALANCE: $%.2f\n", this.balance);
         }
     }   
-    //if user wants to see their balance:
-    public double showBalance(){
-        return this.balance;
-    }
 }
