@@ -1,4 +1,4 @@
-/* Day 5  (Simple OOP project) (08/24/25)
+/* Day 5-Day 7  (Simple OOP project) (08/24/25 - 08/26/25)
  * Simple Bank teller program that utilizes java's OOP features.
  * Kind of hard and made me use chatgpt more than anticipated although I learned a lot in OOP principles at the same time
  * Will update tomorrow with log in features utilizing arrays and arraylists.
