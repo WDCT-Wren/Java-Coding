@@ -1,3 +1,8 @@
+/*
+ * day 8 of coding for every day to learn java little by little
+ * I learned how to use arraylists more, instead of just using it on my BankApp Project.
+ */
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
