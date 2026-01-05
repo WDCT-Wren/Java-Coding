@@ -17,7 +17,7 @@ public class nameReverser {
             reversedName += name.charAt(i);
         }
         //Displays the user's name in reverse
-        System.out.println(reversedName);
+        System.out.println(reversedName.toLowerCase());
 
         input.close();
     }
